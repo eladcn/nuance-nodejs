@@ -1,0 +1,13 @@
+{
+  "name": "Nuance",
+  "version": "1.0.0",
+  "description": "A simple Nuance HTTP Client for NodeJS.",
+  "main": "index.js",
+  "dependencies": {
+    "unirest": "~0.4.2"
+  },
+  "author": {
+    "name": "Elad Cohen",
+    "email": "elad.metal@gmail.com"
+  }
+}
