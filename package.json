@@ -1,13 +1,27 @@
 {
-  "name": "Nuance",
+  "name": "nuance",
   "version": "1.0.0",
   "description": "A simple Nuance HTTP Client for NodeJS.",
   "main": "index.js",
   "dependencies": {
     "unirest": "~0.4.2"
   },
-  "author": {
-    "name": "Elad Cohen",
-    "email": "elad.metal@gmail.com"
-  }
+  "author": "Elad Cohen <elad.metal@gmail.com>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eladcn/nuance-nodejs.git"
+  },
+  "keywords": [
+    "nuance",
+    "http",
+    "client"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eladcn/nuance-nodejs/issues"
+  },
+  "homepage": "https://github.com/eladcn/nuance-nodejs#readme"
 }
