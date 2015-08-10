@@ -28,14 +28,16 @@ nuance.loadFile(path, function(fileLoaded){
 
 After the file has been loaded successfully, we may procceed with sending the request:
 ```javascript
-nuance.sendRequest(language, id, {}, function(response){
+nuance.sendRequest(language, id, additionalHeaders, function(response){
 	console.log(response);
 });
 ```
 
+language = The language code (for example: "eng-USA").
+
 id = The user's identifier - you should send here a random generated string for each user.
 
-language = The language code (for example: "eng-USA").
+additionalHeaders = An object containing more headers than the default headers
 
 response = if successfull, returns an array with what Nuance analyzed. If not successfull - returns the whole response object so you can debug the problem.
 
@@ -47,7 +49,7 @@ var nuance = new Nuance();
 
 nuance.loadFile(path, function(fileLoaded){
 	if(fileLoaded){
-		nuance.sendRequest(language, id, {}, function(response){
+		nuance.sendRequest(language, id, additionalHeaders, function(response){
 			if(typeof response === 'array'){
 				console.log(response);
 			}
@@ -67,3 +69,5 @@ nuance.loadFile(path, function(fileLoaded){
 1. If you receive error 500 with AUDIO_INFO error - the headers you had sent are probably wrong.
 2. Please make sure you are sending the right headers with the right language.
 3. Feel free to modify the default headers in the index.js file, at the moment they are set to handle AMR files.
+4. You may replace the default headers by suppling additionalHeaders, so you don't have to change the default headers in the index.js file.
+5. You need to supply apiKey and appID in the index.js file.
