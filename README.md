@@ -4,7 +4,7 @@ A simple Nuance HTTP Client for NodeJS
 ## Installation
 Download the source or use NPM:
 ```
-install nuance --save
+npm install nuance --save
 ```
 
 ##Usage
