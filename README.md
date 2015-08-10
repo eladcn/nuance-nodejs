@@ -34,10 +34,12 @@ nuance.sendRequest(language, id, {}, function(response){
 ```
 
 id = The user's identifier - you should send here a random generated string for each user.
+
 language = The language code (for example: "eng-USA").
+
 response - if successfull, returns an array with what Nuance analyzed. If not successfull - returns the whole response object so you can debug the problem.
 
-So a whole code should like this:
+So a whole code should look like this:
 ```javascript
 var Nuance = require("nuance");
 
