@@ -1,5 +1,5 @@
 # nuance-nodejs
-A simple Nuance HTTP Client for NodeJS
+A simple Nuance HTTP Client for NodeJS.
 
 ## Installation
 Download the source or use NPM:
@@ -39,9 +39,9 @@ id = The user's identifier - you should send here a random generated string for 
 
 additionalHeaders = An object containing more headers than the default headers
 
-response = if successfull, returns an array with what Nuance analyzed. If not successfull - returns the whole response object so you can debug the problem.
+response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - returns the whole response string so you can debug the problem.
 
-So a whole code should look like this:
+A whole code should look like this:
 ```javascript
 var Nuance = require("nuance");
 
@@ -66,7 +66,7 @@ nuance.loadFile(path, function(fileLoaded){
 ```
 
 ##Notes
-1. If you receive error 500 with AUDIO_INFO error - the headers you had sent are probably wrong.
+1. If you receive error 500 with AUDIO_INFO - the headers you had sent are probably wrong.
 2. Please make sure you are sending the right headers with the right language.
 3. Feel free to modify the default headers in the index.js file, at the moment they are set to handle AMR files.
 4. You may replace the default headers by suppling additionalHeaders, so you don't have to change the default headers in the index.js file.
