@@ -39,7 +39,7 @@ id = The user's identifier - you should send here a random generated string for 
 
 additionalHeaders = An object containing more headers than the default headers
 
-response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - returns the whole response string so you can debug the problem.
+response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - returns the whole response object so you can debug the problem.
 
 A whole code should look like this:
 ```javascript
