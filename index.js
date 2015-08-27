@@ -17,7 +17,7 @@ var Nuance = function(){
 
     var fileContent;
     var headers = {
-        "Content-Type": "audio/amr;codec=amr;bit=16;rate=8000",
+        "Content-Type": "audio/amr",
         "Accept": "text/plain",
         "Accept-Topic": "Dictation"
     }; //Change these headers to the headers that apply to you if needed or add additionalHeaders to the sendRequest function
@@ -31,14 +31,14 @@ var Nuance = function(){
      * @param callback The callback function that the result will be sent to.
      */
     self.sendRequest = function(language, identifier, additionalHeaders, callback){
-        if(typeof callback !== 'function' || !identifier ||  !fileContent){
+        if(!language || typeof callback !== 'function' || !identifier ||  !fileContent){
             return;
         }
 
         headers["Accept-Language"] = language;
 
         if(typeof additionalHeaders === 'object'){
-            mergeAssociativeArrays(headers, additionalHeaders);
+            headers = mergeAssociativeArrays(headers, additionalHeaders);
         }
 
         url += "?appId=" + appID + "&appKey=" + appKey + "&id=" + identifier;
@@ -47,11 +47,17 @@ var Nuance = function(){
             .headers(headers)
             .send(fileContent)
             .end(function(response){
+                var error;
+
                 if(response["code"] === 200){
                     response = response["body"].split("\n");
                 }
+                else{
+                    error = response;
+                    response = undefined;
+                }
 
-                callback(response);
+                callback(error, response);
             });
     };
 
@@ -62,6 +68,14 @@ var Nuance = function(){
      * @param callback The callback we'd like to call when done loading
      */
     self.loadFile = function(path, callback){
+        if(!path){
+            if(typeof callback === 'function'){
+                callback(false);
+            }
+
+            return;
+        }
+
         fs.readFile(path,[], function(err, data){
             if(!err){
                 fileContent = data;

@@ -28,7 +28,7 @@ nuance.loadFile(path, function(fileLoaded){
 
 After the file has been loaded successfully, we may procceed with sending the request:
 ```javascript
-nuance.sendRequest(language, id, additionalHeaders, function(response){
+nuance.sendRequest(language, id, additionalHeaders, function(error, response){
 	console.log(response);
 });
 ```
@@ -39,7 +39,9 @@ id = The user's identifier - you should send here a random generated string for 
 
 additionalHeaders = An object containing more headers than the default headers
 
-response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - returns the whole response object so you can debug the problem.
+error = If the request failed for some reason, the error will be the response object.
+
+response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - it will be undefined.
 
 A whole code should look like this:
 ```javascript
@@ -49,12 +51,11 @@ var nuance = new Nuance();
 
 nuance.loadFile(path, function(fileLoaded){
 	if(fileLoaded){
-		nuance.sendRequest(language, id, additionalHeaders, function(response){
-			if(typeof response === 'array'){
-				console.log(response);
+		nuance.sendRequest(language, id, additionalHeaders, function(error, response){
+			if(error){
+				//An error has occurred
 			}
 			else{
-				//An error occurred
 				console.log(response);
 			}
 		});
