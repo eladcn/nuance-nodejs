@@ -2,7 +2,7 @@
 A simple Nuance HTTP Client for NodeJS.
 
 ## Installation
-Download the source or use NPM:
+Use NPM:
 ```
 npm install nuance --save
 ```
@@ -11,64 +11,47 @@ npm install nuance --save
 First, you need to create a new Nuance instance:
 ```javascript
 var Nuance = require("nuance");
-var nuance = new Nuance();
+var nuance = new Nuance(appID, appKey);
 ```
 
-The next step is loading the file:
+If you'd like to send a Text-To-Speech request, use the method sendTTSRequest as follow:
 ```javascript
-nuance.loadFile(path, function(fileLoaded){
-	if(fileLoaded){
-		//continue
-	}
-	else{
-		//Could not read the file, do something here
+nuance.sendTTSRequest({
+	"text": "hello world", //The text you would like to convert to speech.
+	"output": "testFile.wav", //The output file.
+	"outputFormat": "wav", //The codec you would like to use.
+	"language": "en_US", //The language code (please refer to Nuance's documentation for more info).
+	"voice": "Tom", //The voice you would like to use (please refer to Nuance's documentation for more info).
+	"identifier": "randomIdentifierStringHere", //The user identifier (please refer to Nuance's documentation for more info).
+	"success": function(){ //The success callback function.
+		console.log("The file was saved.");
+	},
+	"error": function(response){ //The error callback function - returns the response from Nuance that you can debug.
+		console.log("An error was occurred");
+		console.log(response);
 	}
 });
 ```
 
-After the file has been loaded successfully, we may procceed with sending the request:
+If you'd like to send a Dictation request (Speech-To-Text), use the method sendDictationRequest as follow:
 ```javascript
-nuance.sendRequest(language, id, additionalHeaders, function(error, response){
-	console.log(response);
-});
-```
-
-language = The language code (for example: "eng-USA").
-
-id = The user's identifier - you should send here a random generated string for each user.
-
-additionalHeaders = An object containing more headers than the default headers
-
-error = If the request failed for some reason, the error will be the response object.
-
-response = If successfull, returns an array with whatever Nuance analyzed. If not successfull - it will be undefined.
-
-A whole code should look like this:
-```javascript
-var Nuance = require("nuance");
-
-var nuance = new Nuance();
-
-nuance.loadFile(path, function(fileLoaded){
-	if(fileLoaded){
-		nuance.sendRequest(language, id, additionalHeaders, function(error, response){
-			if(error){
-				//An error has occurred
-			}
-			else{
-				console.log(response);
-			}
-		});
-	}
-	else{
-		//The file probably doesn't exist
+nuance.sendDictationRequest({
+	"identifier": "randomIdentifierStringHere", //The user identifier (please refer to Nuance's documentation for more info).
+	"language": "en-US", //The language code (please refer to Nuance's documentation for more info).
+	"path": "audio.amr", //The path to the file you would like to send to Nuance.
+	"additionalHeaders": {}, //If you'd like to supply more headers or replace the default headers, supply them here.
+	"success": function(resp){ //The success callback function.
+		console.log(resp);
+	},
+	"error": function(resp){ //The error callback function - returns the response from Nuance that you can debug.
+		console.log("An error was occurred.");
+		console.log(resp);
 	}
 });
 ```
 
 ##Notes
-1. If you receive error 500 with AUDIO_INFO - the headers you had sent are probably wrong.
+1. If you receive error 500 with AUDIO_INFO - the headers you sent are probably wrong.
 2. Please make sure you are sending the right headers with the right language.
-3. Feel free to modify the default headers in the index.js file, at the moment they are set to handle AMR files.
-4. You may replace the default headers by suppling additionalHeaders, so you don't have to change the default headers in the index.js file.
-5. You need to supply apiKey and appID in the index.js file.
+3. Feel free to modify the default dictationHeaders in the nuance.js file, at the moment they are set to handle AMR files.
+4. You may also replace the default dictationHeaders by suppling additionalHeaders in the sendDictationRequest options, so you don't have to change the default headers in the nuance.js file.
