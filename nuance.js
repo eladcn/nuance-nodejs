@@ -70,6 +70,19 @@ var Nuance = function(appID, appKey){
         ttsURL += "&text=" + encodeURIComponent(options.text) + "&codec=" + options.outputFormat;
 
         var file = fs.createWriteStream(options.output);
+
+        file.on('finish',()=>{
+             if(typeof options.success === "function"){
+                    options.success();
+            }
+        });
+        
+        file.on('error',(err)=>{
+            if(typeof options.error === "function"){
+                    options.error(err);
+            }
+        })
+
         https.get(ttsURL, function(response) {
             if(response.statusCode && response.statusCode != 200){
                 if(typeof options.error === "function"){
@@ -78,10 +91,6 @@ var Nuance = function(appID, appKey){
             }
             else{
                 response.pipe(file);
-
-                if(typeof options.success === "function"){
-                    options.success();
-                }
             }
         });
     };
