@@ -13,7 +13,7 @@ var Nuance = function(appID, appKey){
     var self = this;
 
     var dictationURL = "https://dictation.nuancemobility.net:443/NMDPAsrCmdServlet/dictation";
-    var ttsURL = "https://tts.nuancemobility.net/NMDPTTSCmdServlet/tts";
+    var ttsBaseURL = "https://tts.nuancemobility.net/NMDPTTSCmdServlet/tts";
 
     var fileContent;
 
@@ -42,6 +42,7 @@ var Nuance = function(appID, appKey){
      * @param options
      */
     self.sendTTSRequest = function(options){
+
         if(!appID || !appKey){
             if(typeof options.error === "function"){
                 options.error("Invalid appID or appKey.");
@@ -58,7 +59,10 @@ var Nuance = function(appID, appKey){
             return;
         }
 
-        ttsURL += "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
+
+
+
+        ttsURL = ttsBaseURL + "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
 
         if(options.voice){
             ttsURL += "&voice=" + options.voice;
