@@ -12,7 +12,7 @@ var unirest = require("unirest");
 var Nuance = function(appID, appKey){
     var self = this;
 
-    var dictationURL = "https://dictation.nuancemobility.net:443/NMDPAsrCmdServlet/dictation";
+    var dictationBaseURL = "https://dictation.nuancemobility.net:443/NMDPAsrCmdServlet/dictation";
     var ttsBaseURL = "https://tts.nuancemobility.net/NMDPTTSCmdServlet/tts";
 
     var fileContent;
@@ -72,16 +72,16 @@ var Nuance = function(appID, appKey){
         var file = fs.createWriteStream(options.output);
 
         file.on('finish',()=>{
-             if(typeof options.success === "function"){
-                    options.success();
+            if(typeof options.success === "function"){
+                options.success();
             }
         });
-        
+
         file.on('error',(err)=>{
             if(typeof options.error === "function"){
-                    options.error(err);
+                options.error(err);
             }
-        })
+        });
 
         https.get(ttsURL, function(response) {
             if(response.statusCode && response.statusCode != 200){
@@ -131,7 +131,7 @@ var Nuance = function(appID, appKey){
             dictationHeaders = mergeAssociativeArrays(dictationHeaders, options.additionalHeaders);
         }
 
-        dictationURL += "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
+        dictationURL = dictationBaseURL + "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
 
         if(options.path){
             fs.readFile(options.path, [], function(err, data){
