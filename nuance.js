@@ -42,7 +42,6 @@ var Nuance = function(appID, appKey){
      * @param options
      */
     self.sendTTSRequest = function(options){
-
         if(!appID || !appKey){
             if(typeof options.error === "function"){
                 options.error("Invalid appID or appKey.");
@@ -59,10 +58,7 @@ var Nuance = function(appID, appKey){
             return;
         }
 
-
-
-
-        ttsURL = ttsBaseURL + "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
+        var ttsURL = ttsBaseURL + "?appId=" + appID + "&appKey=" + appKey + "&id=" + options.identifier;
 
         if(options.voice){
             ttsURL += "&voice=" + options.voice;
